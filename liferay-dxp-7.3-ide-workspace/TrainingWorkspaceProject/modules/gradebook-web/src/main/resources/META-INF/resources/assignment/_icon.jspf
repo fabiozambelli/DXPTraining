@@ -1,0 +1,27 @@
+Card View
+
+<liferay-frontend:icon-vertical-card
+    actionJsp="/assignment/entry_actions.jsp"
+    actionJspServletContext="<%= application %>" 
+    icon="cards2" resultRow="${row}"
+    title="${entry.getTitle()}" 
+    url="${viewAssignmentURL}">
+
+    <liferay-frontend:vertical-card-sticker-bottom>
+
+        <liferay-ui:user-portrait 
+            cssClass="sticker sticker-bottom"
+            userId="${entry.userId}" 
+        />
+    </liferay-frontend:vertical-card-sticker-bottom>
+
+    <liferay-frontend:vertical-card-footer>
+
+          <div class="truncate-text">
+
+              <%-- Strip HTML --%>
+
+              <%=HtmlUtil.stripHtml(entry.getDescription()) %>
+          </div>
+    </liferay-frontend:vertical-card-footer>
+</liferay-frontend:icon-vertical-card>

@@ -1,0 +1,35 @@
+<%-- Generate assignment view  URL. --%>
+ 
+ <portlet:renderURL var="viewAssignmentURL">
+     <portlet:param name="mvcRenderCommandName" value="<%=MVCCommandNames.VIEW_ASSIGNMENT %>" />
+     <portlet:param name="redirect" value="${currentURL}" />
+     <portlet:param name="assignmentId" value="${entry.assignmentId}" />
+ </portlet:renderURL>
+ 
+  <c:choose>
+
+     <c:when
+         test='${assignmentsManagementToolbarDisplayContext.getDisplayStyle().equals("descriptive")}'>
+(descriptive)
+<%@ include file="/assignment/_descriptive.jspf"%>	
+
+         <liferay-ui:search-container-column-jsp
+             path="/assignment/entry_actions.jsp" />
+     </c:when>
+
+     <c:when
+         test='${assignmentsManagementToolbarDisplayContext.getDisplayStyle().equals("icon")}'>
+(icon)
+         <%
+             row.setCssClass("lfr-asset-item");
+         %>
+<%@ include file="/assignment/_icon.jspf"%>	
+             
+     </c:when>
+
+     <c:otherwise>
+(tableview)
+	<%@ include file="/assignment/_tableview.jspf"%>	
+             
+     </c:otherwise>
+ </c:choose>

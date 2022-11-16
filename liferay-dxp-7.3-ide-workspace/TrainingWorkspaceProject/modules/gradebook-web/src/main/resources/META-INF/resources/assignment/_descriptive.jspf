@@ -1,0 +1,25 @@
+Descriptive (list) view
+
+<liferay-ui:search-container-column-user 
+             showDetails="<%=false%>"
+             userId="<%=entry.getUserId()%>" 
+         />
+         
+<%
+    String modifiedDateDescription =
+        LanguageUtil.getTimeDescription(
+                request, System.currentTimeMillis() 
+                - entry.getModifiedDate().getTime(), true);
+%>
+
+<h5 class="text-default">
+    <liferay-ui:message
+        arguments="<%=new String[] {entry.getUserName(), modifiedDateDescription}%>"
+        key="x-modified-x-ago" />
+</h5>
+
+<h4>
+    <aui:a href="${viewAssignmentURL}">
+        ${entry.getTitle()}
+    </aui:a>
+</h4>

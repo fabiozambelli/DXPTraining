@@ -1,0 +1,7 @@
+Bundle-Name: my-traning-form-field
+Bundle-SymbolicName: com.liferay.training.form.field
+Bundle-Version: 1.0.0
+Provide-Capability:\
+	soy;\
+		type:String="LiferayFormField"
+Web-ContextPath: /dynamic-data-my-traning-form-field-form-field

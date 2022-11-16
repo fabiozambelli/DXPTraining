@@ -1,0 +1,24 @@
+Table View
+
+<%= entry.getTitle(locale) %>
+
+<liferay-ui:search-container-column-text 
+    href="${viewAssignmentURL}" 
+    name="title" 
+    value="<%= entry.getTitle() %>" 
+/>
+
+<liferay-ui:search-container-column-user 
+    name="author" 
+    userId="${entry.userId}" 
+/>
+
+<liferay-ui:search-container-column-date 
+    name="create-date"
+    property="createDate" 
+/>
+
+<liferay-ui:search-container-column-jsp 
+    name="actions"
+    path="/assignment/entry_actions.jsp" 
+/>

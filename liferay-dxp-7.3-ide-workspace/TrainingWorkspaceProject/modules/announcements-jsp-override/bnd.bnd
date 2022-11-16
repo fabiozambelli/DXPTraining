@@ -1,0 +1,5 @@
+Bundle-Name: announcements-jsp-override
+Bundle-SymbolicName: announcements.jsp.override
+Bundle-Version: 1.0.0
+Fragment-Host: com.liferay.announcements.web;bundle-version="3.0.0"
+Portal-Bundle-Version: 7.1.0

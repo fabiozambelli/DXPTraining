@@ -1,0 +1,5 @@
+Bundle-Name: training-form-field
+Bundle-SymbolicName: com.liferay.training.form.field
+Bundle-Version: 1.0.0
+Liferay-JS-Config: /META-INF/resources/config.js
+Web-ContextPath: /dynamic-data-training-form-field-form-field
