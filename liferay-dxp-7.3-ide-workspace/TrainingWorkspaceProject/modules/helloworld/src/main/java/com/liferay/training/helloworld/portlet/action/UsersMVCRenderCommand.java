@@ -1,5 +1,6 @@
 package com.liferay.training.helloworld.portlet.action;
 
+import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
@@ -8,6 +9,7 @@ import com.liferay.training.helloworld.constants.HelloWorldPortletKeys;
 import java.util.List;
 
 import javax.portlet.PortletException;
+import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -21,12 +23,10 @@ public class UsersMVCRenderCommand implements MVCRenderCommand  {
 	public String render(RenderRequest renderRequest, RenderResponse renderResponse) throws PortletException {
 		// TODO Auto-generated method stub
 		
-		System.out.println("render");
-		
 		List<User> users = UserLocalServiceUtil.getUsers(0, UserLocalServiceUtil.getUsersCount());
 		renderRequest.setAttribute("users", users);
 		renderRequest.setAttribute("usersCount", UserLocalServiceUtil.getUsersCount());
-		
+	
 		return "/view.jsp";
 	}
 

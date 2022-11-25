@@ -1,0 +1,40 @@
+version: "3.7"
+services:
+  training-db:
+    image: postgres:12.12
+    container_name: training-db
+    networks:
+      - network-training-dxp
+    ports:
+      - 5434:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    volumes:
+      - ./services/postgres/config/create-training.sql:/docker-entrypoint-initdb.d/create-training.sql
+      - /volume-training-db:/var/lib/postgresql/data
+  training-dxp:
+    build: .
+    command: ["-c", "/usr/local/bin/wait-for.sh training-db:5432"]
+    container_name: training-dxp
+    depends_on:
+      - training-db
+    networks: 
+      - network-training-dxp
+    ports: 
+      - 8080:8080
+      - 8000:8000
+      - 127.0.0.1:11311:11311
+    environment:
+      - JAVA_OPTS="-agentlib:jdwp=transport=dt_socket,address=*:8000,server=y,suspend=n"
+    volumes:
+      - volume-training-dxp-data:/opt/liferay/data
+      - ./deploy:/mnt/liferay/deploy
+networks:
+  network-training-dxp:
+    name: network-training-dxp
+volumes:
+  volume-training-db:
+  volume-training-dxp-data:
+  volume-training-dxp-work:
