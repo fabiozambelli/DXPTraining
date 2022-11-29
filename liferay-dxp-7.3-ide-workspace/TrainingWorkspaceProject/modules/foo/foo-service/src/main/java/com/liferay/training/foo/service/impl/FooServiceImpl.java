@@ -18,11 +18,14 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.training.foo.model.Foo;
+import com.liferay.training.foo.service.FooLocalService;
+import com.liferay.training.foo.service.FooService;
 import com.liferay.training.foo.service.base.FooServiceBaseImpl;
 
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -50,5 +53,4 @@ public class FooServiceImpl extends FooServiceBaseImpl {
 	public Foo getFoo(long fooId) throws PortalException {
 		return fooLocalService.getFoo(fooId);
 	}
-
 }

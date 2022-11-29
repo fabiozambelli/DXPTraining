@@ -1,5 +1,7 @@
 package com.liferay.training.foo.portlet.action;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
@@ -14,6 +16,7 @@ import org.osgi.service.component.annotations.Reference;
 
 import com.liferay.training.foo.constants.*;
 import com.liferay.training.foo.model.Foo;
+import com.liferay.training.foo.portlet.FooPortlet;
 import com.liferay.training.foo.service.FooService;
 
 import java.util.List;
@@ -39,4 +42,7 @@ public class ViewItemsMVCRenderCommand implements MVCRenderCommand {
 	
 	@Reference
 	private FooService _fooService;
+	
+	private static final Log _log = LogFactoryUtil.getLog(FooPortlet.class);
+
 }

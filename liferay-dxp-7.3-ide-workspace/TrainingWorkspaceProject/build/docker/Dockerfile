@@ -1,4 +1,4 @@
-FROM liferay/dxp:7.4.13-u52
+FROM liferay/dxp:7.3.10-u5
 ENV LIFERAY_WORKSPACE_ENVIRONMENT=local
 COPY --chown=liferay:liferay deploy /mnt/liferay/deploy
 COPY --chown=liferay:liferay patching /mnt/liferay/patching
