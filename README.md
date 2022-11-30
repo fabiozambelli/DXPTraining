@@ -1,1 +1,23 @@
-/home/lena/Documents/Logseq/pages/DXPTraining.md
+- ## TrainingWorkspaceProject
+- modules
+	- announcements-jsp-override
+	- customize-jsp-porlet-filter
+	- expando
+	- foo
+	- gradebook
+	- helloworld
+	- message-bus-listener
+	- mvc-command-override
+	- my-training-form-field
+	- my-user-local-service-override
+	- portlet-module-portlet
+	- post-login-event-listener
+	- strust-action-override
+	- training-gogo-command
+	- user-indexer-post-processor
+	- user-post-update-model-listener
+- themes
+	- livingstone-fjord-theme
+	- training-tragments
+	- training-layouttpl
+	- training-theme
