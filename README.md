@@ -18,6 +18,6 @@
 	- user-post-update-model-listener
 - themes
 	- livingstone-fjord-theme
-	- training-tragments
+	- training-fragments
 	- training-layouttpl
 	- training-theme
