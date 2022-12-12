@@ -1,5 +1,7 @@
 <%@ include file="/init.jsp" %>
 
+<div class="container-fluid-1280">
+
 <p>
 	<b><liferay-ui:message key="foo.caption"/></b>
 </p>
@@ -10,7 +12,14 @@
 
 <a href="<%= addItemURL%>">addItem</a>
 
-<div class="container-fluid-1280">
+
+<!--  clay:management-toolbar
+	disabled="${fooCount eq 0}"
+	displayContext="${itemsManagementToolbarDisplayContext}"
+	itemsTotal="${fooCount}"
+	searchContainerId="fooEntries"
+	selectable="false"
+	/ -->
 	
 <liferay-ui:search-container
 	emptyResultsMessage="no-foos"

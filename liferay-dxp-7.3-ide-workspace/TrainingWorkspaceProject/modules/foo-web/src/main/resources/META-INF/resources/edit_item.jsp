@@ -12,7 +12,7 @@
 	</c:otherwise>
 </c:choose>
 
-<div class="container-fluid-1280 edit-assignment">
+<div class="container-fluid-1280 edit-item">
 	
 	<h1><liferay-ui:message key="${editTitle}" /></h1>
 	
