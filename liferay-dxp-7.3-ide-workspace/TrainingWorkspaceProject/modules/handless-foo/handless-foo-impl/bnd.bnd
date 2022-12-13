@@ -1,0 +1,3 @@
+Bundle-Name: handless-foo-impl
+Bundle-SymbolicName: handless.foo.impl
+Bundle-Version: 1.0.0

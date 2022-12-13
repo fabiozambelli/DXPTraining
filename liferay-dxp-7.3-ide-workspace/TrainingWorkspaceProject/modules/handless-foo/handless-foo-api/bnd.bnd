@@ -1,0 +1,6 @@
+Bundle-Name: handless-foo-api
+Bundle-SymbolicName: handless.foo.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	handless.foo.dto.v1_0,\
+	handless.foo.resource.v1_0
