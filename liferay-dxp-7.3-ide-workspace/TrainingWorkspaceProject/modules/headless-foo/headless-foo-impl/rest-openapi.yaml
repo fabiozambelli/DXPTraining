@@ -1,0 +1,109 @@
+info:
+    description:
+        "HeadlessFoo REST API. A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
+        'com.liferay.training.headless.foo.client', and version '1.0.0'."
+    license:
+        name: "Apache 2.0"
+        url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+    title: "HeadlessFoo"
+    version: v1.0
+openapi: 3.0.1
+components:
+  schemas:
+    Item:
+      description: Contains all of the data for a single item.
+      properties:
+        name:
+          description: item name.
+          type: string
+        id:
+          description: The item internal ID.
+          type: string
+        groupId:
+          description: Group ID.
+          type: string
+      type: object
+paths:
+  "/items":
+    get:
+      operationId: getItemsPage
+      tags: ["Item"]
+      description: Retrieves the list of items. Results can be paginated, filtered, searched, and sorted.
+      parameters:
+        - in: query
+          name: filter
+          schema:
+            type: string
+        - in: query
+          name: page
+          schema:
+            type: integer
+        - in: query
+          name: pageSize
+          schema:
+            type: integer
+        - in: query
+          name: search
+          schema:
+            type: string
+        - in: query
+          name: sort
+          schema:
+            type: string
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: "#/components/schemas/Item"
+                type: array
+            application/xml:
+              schema:
+                items:
+                  $ref: "#/components/schemas/Item"
+                type: array
+    post:
+      operationId: postItem
+      tags: ["Item"]
+      description: Create a new item.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Item"
+          application/xml:
+            schema:
+              $ref: "#/components/schemas/Item"
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Item"
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/Item"
+  "/items/{itemId}":
+    get:
+      operationId: getItem
+      tags: ["Item"]
+      description: Retrieves the item via its ID.
+      parameters:
+        - name: itemId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Item"
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/Item"

@@ -1,0 +1,6 @@
+Bundle-Name: headless-foo-api
+Bundle-SymbolicName: com.liferay.training.headless.foo.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.training.headless.foo.dto.v1_0,\
+	com.liferay.training.headless.foo.resource.v1_0

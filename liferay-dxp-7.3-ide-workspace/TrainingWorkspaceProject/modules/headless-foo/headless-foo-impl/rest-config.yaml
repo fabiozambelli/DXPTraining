@@ -1,0 +1,9 @@
+apiDir: "../headless-foo-api/src/main/java"
+apiPackagePath: "com.liferay.training.headless.foo"
+application:
+    baseURI: "/headless-foo"
+    className: "HeadlessFooApplication"
+    name: "HeadlessFoo"
+author: "lena"
+clientDir: "../headless-foo-client/src/main/java"
+testDir: "../headless-foo-test/src/testIntegration/java"
