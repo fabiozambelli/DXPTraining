@@ -1,9 +1,0 @@
-apiDir: "../handless-foo-api/src/main/java"
-apiPackagePath: "handless.foo"
-application:
-    baseURI: "/handless-foo"
-    className: "HandlessFooApplication"
-    name: "HandlessFoo"
-author: "lena"
-clientDir: "../handless-foo-client/src/main/java"
-testDir: "../handless-foo-test/src/testIntegration/java"

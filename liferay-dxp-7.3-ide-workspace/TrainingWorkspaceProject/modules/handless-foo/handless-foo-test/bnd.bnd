@@ -1,4 +1,0 @@
-Bundle-Name: handless-foo-test
-Bundle-SymbolicName: handless.foo.test
-Bundle-Version: 1.0.0
--includeresource: handless.foo.client.jar=../handless-foo-client/build/libs/handless.foo.client-1.0.0.jar;lib:=true
