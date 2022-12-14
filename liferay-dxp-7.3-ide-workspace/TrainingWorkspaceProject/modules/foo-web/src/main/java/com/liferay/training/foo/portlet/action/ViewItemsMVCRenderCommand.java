@@ -41,9 +41,9 @@ public class ViewItemsMVCRenderCommand implements MVCRenderCommand {
 		List<Foo> foos = _fooService.getFoosByGroupId(themeDisplay.getScopeGroupId());
 		renderRequest.setAttribute("foos", foos);
 		
-		// addItemsListAttributes(renderRequest);
+		addItemsListAttributes(renderRequest);
 		
-		// addManagementToolbarAttributes(renderRequest, renderResponse);
+		addManagementToolbarAttributes(renderRequest, renderResponse);
 		
 		return "/view.jsp";	
 	}

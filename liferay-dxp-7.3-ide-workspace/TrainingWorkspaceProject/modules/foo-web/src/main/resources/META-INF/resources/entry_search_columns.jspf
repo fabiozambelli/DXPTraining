@@ -2,4 +2,3 @@
 	name="field1"
 	value="<%= entry.getField1() %>"
 	/>
-	[<%= entry.getField1() %>]

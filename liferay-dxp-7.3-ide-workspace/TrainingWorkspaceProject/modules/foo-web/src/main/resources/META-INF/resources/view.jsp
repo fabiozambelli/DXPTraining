@@ -10,16 +10,13 @@
 	<portlet:param name="mvcRenderCommandName" value="<%=MVCCommandNames.EDIT_ITEM%>" />
 </portlet:renderURL>
 
-<a href="<%= addItemURL%>">addItem</a>
-
-
-<!--  clay:management-toolbar
+<clay:management-toolbar
 	disabled="${fooCount eq 0}"
 	displayContext="${itemsManagementToolbarDisplayContext}"
 	itemsTotal="${fooCount}"
 	searchContainerId="fooEntries"
 	selectable="false"
-	/ -->
+	/>
 	
 <liferay-ui:search-container
 	emptyResultsMessage="no-foos"
@@ -36,7 +33,12 @@
 		<%@ include file="/entry_search_columns.jspf" %>
 			
 	</liferay-ui:search-container-row>
-
+	
+	<liferay-ui:search-iterator 
+            displayStyle="${itemsManagementToolbarDisplayContext.getDisplayStyle()}"
+            markupView="lexicon" 
+        />
+        
 </liferay-ui:search-container>
 
 </div>
