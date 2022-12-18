@@ -16,6 +16,10 @@ package com.liferay.training.foo.service.impl;
 
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.training.foo.model.Foo;
@@ -24,6 +28,8 @@ import com.liferay.training.foo.service.base.FooLocalServiceBaseImpl;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Brian Wing Shun Chan
@@ -31,6 +37,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(property = "model.class.name=com.liferay.training.foo.model.Foo", service = AopService.class)
 public class FooLocalServiceImpl extends FooLocalServiceBaseImpl {
 
+	@Indexable(type = IndexableType.REINDEX)
 	public Foo addFoo(long groupId, String field1, ServiceContext serviceContext) throws PortalException {
 		
 		long fooId = counterLocalService.increment(Foo.class.getName());
@@ -52,6 +59,7 @@ public class FooLocalServiceImpl extends FooLocalServiceBaseImpl {
 	}
 	
 	public List<Foo> getFoosByGroupId(long groupId) {
+		
 		return fooPersistence.findByGroupId(groupId);
 	}
 	
@@ -77,4 +85,7 @@ public class FooLocalServiceImpl extends FooLocalServiceBaseImpl {
 	public Foo getFoo(long fooId) throws PortalException {
 		return super.getFoo(fooId);
 	}
+	
+	private static final Logger _log = LoggerFactory.getLogger(FooLocalServiceImpl.class);
+
 }

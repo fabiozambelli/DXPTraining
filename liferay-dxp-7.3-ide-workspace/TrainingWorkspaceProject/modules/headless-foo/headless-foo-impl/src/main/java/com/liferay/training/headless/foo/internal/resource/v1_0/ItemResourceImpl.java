@@ -1,12 +1,12 @@
 package com.liferay.training.headless.foo.internal.resource.v1_0;
 
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -23,7 +23,8 @@ import javax.ws.rs.core.MultivaluedMap;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 /**
  * @author lena
  */
@@ -40,10 +41,11 @@ public class ItemResourceImpl extends BaseItemResourceImpl implements EntityMode
 		return _itemEntityModel;
 	}
 	
+	@SuppressWarnings("deprecation")
 	@Override
 	public Page<Item> getItemsPage(String search, Filter filter, Pagination pagination, Sort[] sorts) throws Exception {
 		try {
-			
+
 			return SearchUtil.search(
 					booleanQuery -> {
 						// does nothing, we just need the UnsafeConsumer<BooleanQuery, Exception> method
@@ -57,7 +59,9 @@ public class ItemResourceImpl extends BaseItemResourceImpl implements EntityMode
 							_fooService.getFoo(
 									GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))),
 					sorts);
+
 		} catch (Exception e) {
+			_log.error("Error listing items: " + e.getMessage(), e);
 			e.printStackTrace();
 			throw e;
 		}
@@ -99,4 +103,6 @@ public class ItemResourceImpl extends BaseItemResourceImpl implements EntityMode
 	
 	@Reference
 	private FooService _fooService;
+	
+	private static final Logger _log = LoggerFactory.getLogger(ItemResourceImpl.class);
 }

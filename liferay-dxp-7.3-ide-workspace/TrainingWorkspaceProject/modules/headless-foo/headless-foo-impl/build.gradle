@@ -12,6 +12,7 @@ buildscript {
 
 dependencies {
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.10.3"
+	compileOnly group: "com.liferay.portal", name: "release.dxp.api"
 	compileOnly group: "com.liferay", name: "com.liferay.petra.function"
 	compileOnly group: "com.liferay", name: "com.liferay.petra.string"
 	compileOnly group: "com.liferay", name: "com.liferay.portal.odata.api"
@@ -28,6 +29,7 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.core"
 	compileOnly project(":modules:headless-foo:headless-foo-api")
 	compileOnly project(":modules:foo:foo-api")
+	compileOnly group: "org.slf4j", name: "slf4j-api"
 	restBuilder group: "com.liferay", name: "com.liferay.portal.tools.rest.builder", version: "1.0.114"
 }
 
