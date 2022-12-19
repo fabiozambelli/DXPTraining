@@ -1,6 +1,7 @@
 package com.liferay.training.foo.portlet.action;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -11,6 +12,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.training.foo.constants.FooPortletKeys;
 import com.liferay.training.foo.constants.MVCCommandNames;
@@ -35,20 +37,21 @@ public class ViewItemsMVCRenderCommand implements MVCRenderCommand {
 	@Override
 	public String render(RenderRequest renderRequest, RenderResponse renderResponse) throws PortletException {
 		
-		ThemeDisplay themeDisplay =
-				(ThemeDisplay) renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
-		
-		List<Foo> foos = _fooService.getFoosByGroupId(themeDisplay.getScopeGroupId());
-		renderRequest.setAttribute("foos", foos);
-		
-		addItemsListAttributes(renderRequest);
-		
-		addManagementToolbarAttributes(renderRequest, renderResponse);
+		try {
+			
+			addItemsListAttributes(renderRequest);
+			
+			addManagementToolbarAttributes(renderRequest, renderResponse);
+
+		} catch (PortalException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		return "/view.jsp";	
 	}
 	
-	private void addItemsListAttributes(RenderRequest renderRequest) {
+	private void addItemsListAttributes(RenderRequest renderRequest) throws PortalException {
 		
 		ThemeDisplay themeDisplay =
 				(ThemeDisplay) renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
@@ -76,11 +79,11 @@ public class ViewItemsMVCRenderCommand implements MVCRenderCommand {
 		
 		String keywords = ParamUtil.getString(renderRequest, "keywords");
 		
-		List<Foo> foos = _fooService.getFoosByGroupId(themeDisplay.getScopeGroupId());
-		
+		List<Foo> foos = _fooService.searchFoo(themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(), keywords);
+
 		renderRequest.setAttribute("foos", foos);
 
-		renderRequest.setAttribute("fooCount", 2); //TODO
+		renderRequest.setAttribute("fooCount", Validator.isNotNull(foos)?foos.size():0); 
 	}
 
 	// Adds Clay management toolbar context object to the request.

@@ -11,6 +11,10 @@ import org.osgi.service.component.annotations.Reference;
 
 import com.liferay.portal.kernel.search.SearchContext;
 
+/*
+ * KeywordQueryContributor classes contribute clauses to the ongoing search query, 
+ * to control the way model entities are searched.
+ */
 @Component(
 		immediate = true,
 		property = "indexer.class.name=com.liferay.training.foo.model.Foo",

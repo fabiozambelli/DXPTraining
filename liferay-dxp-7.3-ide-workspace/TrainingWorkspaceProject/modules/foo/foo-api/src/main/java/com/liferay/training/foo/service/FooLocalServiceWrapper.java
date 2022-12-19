@@ -394,6 +394,13 @@ public class FooLocalServiceWrapper
 		return _fooLocalService.getPersistedModel(primaryKeyObj);
 	}
 
+	@Override
+	public java.util.List<com.liferay.training.foo.model.Foo> searchFoo(
+		long companyId, long groupId, String keywords) {
+
+		return _fooLocalService.searchFoo(companyId, groupId, keywords);
+	}
+
 	/**
 	 * Updates the foo in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

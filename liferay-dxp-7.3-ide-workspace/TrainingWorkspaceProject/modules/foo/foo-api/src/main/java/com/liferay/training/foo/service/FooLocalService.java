@@ -77,6 +77,7 @@ public interface FooLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public Foo addFoo(Foo foo);
 
+	@Indexable(type = IndexableType.REINDEX)
 	public Foo addFoo(
 			long groupId, String field1, ServiceContext serviceContext)
 		throws PortalException;
@@ -313,6 +314,9 @@ public interface FooLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Foo> searchFoo(long companyId, long groupId, String keywords);
 
 	/**
 	 * Updates the foo in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

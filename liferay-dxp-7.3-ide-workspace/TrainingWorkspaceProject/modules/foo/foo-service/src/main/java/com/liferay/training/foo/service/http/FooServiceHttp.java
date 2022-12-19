@@ -202,6 +202,47 @@ public class FooServiceHttp {
 		}
 	}
 
+	public static java.util.List<com.liferay.training.foo.model.Foo> searchFoo(
+			HttpPrincipal httpPrincipal, long companyId, long groupId,
+			String keywords)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				FooServiceUtil.class, "searchFoo", _searchFooParameterTypes4);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, companyId, groupId, keywords);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (java.util.List<com.liferay.training.foo.model.Foo>)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(FooServiceHttp.class);
 
 	private static final Class<?>[] _addFooParameterTypes0 = new Class[] {
@@ -216,6 +257,9 @@ public class FooServiceHttp {
 		new Class[] {long.class};
 	private static final Class<?>[] _getFooParameterTypes3 = new Class[] {
 		long.class
+	};
+	private static final Class<?>[] _searchFooParameterTypes4 = new Class[] {
+		long.class, long.class, String.class
 	};
 
 }

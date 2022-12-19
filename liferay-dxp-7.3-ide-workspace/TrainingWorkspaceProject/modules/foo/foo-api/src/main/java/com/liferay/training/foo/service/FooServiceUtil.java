@@ -63,6 +63,13 @@ public class FooServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	public static List<Foo> searchFoo(
+			long companyId, long groupId, String keywords)
+		throws PortalException {
+
+		return getService().searchFoo(companyId, groupId, keywords);
+	}
+
 	public static Foo updateFoo(
 			long fooId, long groupId, String field1,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)

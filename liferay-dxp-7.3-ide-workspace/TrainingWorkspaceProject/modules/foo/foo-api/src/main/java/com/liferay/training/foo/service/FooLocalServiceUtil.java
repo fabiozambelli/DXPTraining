@@ -352,6 +352,12 @@ public class FooLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static List<Foo> searchFoo(
+		long companyId, long groupId, String keywords) {
+
+		return getService().searchFoo(companyId, groupId, keywords);
+	}
+
 	/**
 	 * Updates the foo in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

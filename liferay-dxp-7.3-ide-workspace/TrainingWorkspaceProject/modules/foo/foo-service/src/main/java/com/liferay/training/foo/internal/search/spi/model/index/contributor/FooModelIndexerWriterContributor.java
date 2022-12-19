@@ -13,6 +13,9 @@ import org.osgi.service.component.annotations.Reference;
 
 import com.liferay.portal.kernel.search.Document;
 
+/*
+ * ModelIndexerWriterContributor classes configure the re-indexing and batch re-indexing behavior for the model entity.
+ */
 @Component(
 		immediate = true,
 		property = "indexer.class.name=com.liferay.training.foo.model.Foo",
@@ -20,6 +23,10 @@ import com.liferay.portal.kernel.search.Document;
 )
 public class FooModelIndexerWriterContributor implements ModelIndexerWriterContributor<Foo> {
 
+	/*
+	 * customize method is called when a re-index is triggered from the Search administrative application found in Control Panel 
+	 * or when a CRUD operation is made on the entity, if the modelIndexed method is implemented in the contributor
+	 */
 	@Override
 	public void customize(BatchIndexingActionable batchIndexingActionable,
 			ModelIndexerWriterDocumentHelper modelIndexerWriterDocumentHelper) {

@@ -137,6 +137,24 @@ public class FooServiceSoap {
 		}
 	}
 
+	public static com.liferay.training.foo.model.FooSoap[] searchFoo(
+			long companyId, long groupId, String keywords)
+		throws RemoteException {
+
+		try {
+			java.util.List<com.liferay.training.foo.model.Foo> returnValue =
+				FooServiceUtil.searchFoo(companyId, groupId, keywords);
+
+			return com.liferay.training.foo.model.FooSoap.toSoapModels(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(FooServiceSoap.class);
 
 }

@@ -69,6 +69,10 @@ public interface FooService extends BaseService {
 	 */
 	public String getOSGiServiceIdentifier();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Foo> searchFoo(long companyId, long groupId, String keywords)
+		throws PortalException;
+
 	public Foo updateFoo(
 			long fooId, long groupId, String field1,
 			ServiceContext serviceContext)

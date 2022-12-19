@@ -64,6 +64,14 @@ public class FooServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.training.foo.model.Foo> searchFoo(
+			long companyId, long groupId, String keywords)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _fooService.searchFoo(companyId, groupId, keywords);
+	}
+
+	@Override
 	public com.liferay.training.foo.model.Foo updateFoo(
 			long fooId, long groupId, String field1,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)

@@ -9,6 +9,10 @@ import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 
+/*
+ * ModelSummaryContributor classes get the Summary object created for each search document, 
+ * so you can manipulate it by adding specific fields or setting the length of the displayed content.
+ */
 @Component(
 		immediate = true,
 		property = "indexer.class.name=com.liferay.training.foo.model.Foo",
