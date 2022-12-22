@@ -4,8 +4,7 @@
 	- customize-jsp-porlet-filter
 	- expando
 	- foo
-		> search powered by Elasticsearch APIs
-		> headless REST APIs 
+		> search powered by Elasticsearch APIs, headless REST APIs 
 	- gradebook
 	- helloworld
 	- message-bus-listener
