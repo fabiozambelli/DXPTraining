@@ -1,4 +1,4 @@
-- ## TrainingWorkspaceProject
+## TrainingWorkspaceProject
 - modules
 	- announcements-jsp-override
 	- customize-jsp-porlet-filter
@@ -24,6 +24,8 @@
 	- training-theme
 	
 ## Usage
-./TrainingWorkspaceProject/build/docker$ docker compose up --build -d
-./TrainingWorkspaceProject/modules/<module>$ ../../gradlew dockerDeploy
+
+- ./TrainingWorkspaceProject/build/docker$ **docker compose up --build -d**
+
+- ./TrainingWorkspaceProject/modules/<module>$ **../../gradlew dockerDeploy**
 
