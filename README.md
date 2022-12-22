@@ -4,6 +4,8 @@
 	- customize-jsp-porlet-filter
 	- expando
 	- foo
+		> search powered by Elasticsearch APIs
+		> headless REST APIs 
 	- gradebook
 	- helloworld
 	- message-bus-listener
@@ -21,3 +23,8 @@
 	- training-fragments
 	- training-layouttpl
 	- training-theme
+	
+## Usage
+./TrainingWorkspaceProject/build/docker$ docker compose up --build -d
+./TrainingWorkspaceProject/modules/<module>$ ../../gradlew dockerDeploy
+

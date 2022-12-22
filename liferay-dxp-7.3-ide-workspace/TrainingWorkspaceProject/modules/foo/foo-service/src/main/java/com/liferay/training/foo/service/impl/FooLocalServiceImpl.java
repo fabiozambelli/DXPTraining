@@ -89,6 +89,7 @@ public class FooLocalServiceImpl extends FooLocalServiceBaseImpl {
 		return fooPersistence.findByGroupId(groupId, start, end, orderByComparator);
 	}
 	
+	// configure debug log level on com.liferay.portal.search.elasticsearch7.internal.ElasticsearchIndexSearcher 
 	public List<Foo> searchFoo(long companyId, long groupId, String keywords){
 		
 		// Build the Search Query
