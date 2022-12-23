@@ -64,10 +64,12 @@ public class FooServiceUtil {
 	}
 
 	public static List<Foo> searchFoo(
-			long companyId, long groupId, String keywords)
+			long companyId, long groupId, String keywords,
+			String orderFieldName, boolean orderReverse)
 		throws PortalException {
 
-		return getService().searchFoo(companyId, groupId, keywords);
+		return getService().searchFoo(
+			companyId, groupId, keywords, orderFieldName, orderReverse);
 	}
 
 	public static Foo updateFoo(

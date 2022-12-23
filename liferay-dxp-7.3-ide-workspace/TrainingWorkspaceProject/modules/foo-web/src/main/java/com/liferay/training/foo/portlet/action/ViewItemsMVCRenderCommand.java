@@ -7,6 +7,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
@@ -68,18 +69,13 @@ public class ViewItemsMVCRenderCommand implements MVCRenderCommand {
 		int end = start + delta;
 		
 		String orderByCol =
-				ParamUtil.getString(renderRequest, "orderByCol", "title");
+				ParamUtil.getString(renderRequest, "orderByCol", Field.NAME);
 		String orderByType =
 				ParamUtil.getString(renderRequest, "orderByType", "asc");
 		
-		
-		OrderByComparator<Foo> comparator =
-				OrderByComparatorFactoryUtil.create(
-				"Foo", orderByCol, !("asc").equals(orderByType));
-		
 		String keywords = ParamUtil.getString(renderRequest, "keywords");
 		
-		List<Foo> foos = _fooService.searchFoo(themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(), keywords);
+		List<Foo> foos = _fooService.searchFoo(themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(), keywords, orderByCol, !("asc").equals(orderByType));
 
 		renderRequest.setAttribute("foos", foos);
 

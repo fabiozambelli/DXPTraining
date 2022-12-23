@@ -65,10 +65,12 @@ public class FooServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.training.foo.model.Foo> searchFoo(
-			long companyId, long groupId, String keywords)
+			long companyId, long groupId, String keywords,
+			String orderFieldName, boolean orderReverse)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _fooService.searchFoo(companyId, groupId, keywords);
+		return _fooService.searchFoo(
+			companyId, groupId, keywords, orderFieldName, orderReverse);
 	}
 
 	@Override

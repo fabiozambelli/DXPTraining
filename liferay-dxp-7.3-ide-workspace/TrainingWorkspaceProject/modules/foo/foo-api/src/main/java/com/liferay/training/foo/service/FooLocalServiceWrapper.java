@@ -396,9 +396,11 @@ public class FooLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.training.foo.model.Foo> searchFoo(
-		long companyId, long groupId, String keywords) {
+		long companyId, long groupId, String keywords, String orderFieldName,
+		boolean orderReverse) {
 
-		return _fooLocalService.searchFoo(companyId, groupId, keywords);
+		return _fooLocalService.searchFoo(
+			companyId, groupId, keywords, orderFieldName, orderReverse);
 	}
 
 	/**

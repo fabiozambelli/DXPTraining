@@ -353,9 +353,11 @@ public class FooLocalServiceUtil {
 	}
 
 	public static List<Foo> searchFoo(
-		long companyId, long groupId, String keywords) {
+		long companyId, long groupId, String keywords, String orderFieldName,
+		boolean orderReverse) {
 
-		return getService().searchFoo(companyId, groupId, keywords);
+		return getService().searchFoo(
+			companyId, groupId, keywords, orderFieldName, orderReverse);
 	}
 
 	/**

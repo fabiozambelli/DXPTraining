@@ -54,7 +54,7 @@ public class FooServiceImpl extends FooServiceBaseImpl {
 		return fooLocalService.getFoo(fooId);
 	}
 	
-	public List<Foo>  searchFoo(long companyId, long groupId, String keywords) throws PortalException {
-		return fooLocalService.searchFoo(companyId, groupId, keywords);
+	public List<Foo>  searchFoo(long companyId, long groupId, String keywords, String orderFieldName, boolean orderReverse) throws PortalException {
+		return fooLocalService.searchFoo(companyId, groupId, keywords, orderFieldName, orderReverse);
 	}
 }

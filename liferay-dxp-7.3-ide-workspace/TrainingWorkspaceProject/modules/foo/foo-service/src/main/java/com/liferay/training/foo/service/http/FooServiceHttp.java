@@ -204,7 +204,7 @@ public class FooServiceHttp {
 
 	public static java.util.List<com.liferay.training.foo.model.Foo> searchFoo(
 			HttpPrincipal httpPrincipal, long companyId, long groupId,
-			String keywords)
+			String keywords, String orderFieldName, boolean orderReverse)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -212,7 +212,8 @@ public class FooServiceHttp {
 				FooServiceUtil.class, "searchFoo", _searchFooParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, groupId, keywords);
+				methodKey, companyId, groupId, keywords, orderFieldName,
+				orderReverse);
 
 			Object returnObj = null;
 
@@ -259,7 +260,7 @@ public class FooServiceHttp {
 		long.class
 	};
 	private static final Class<?>[] _searchFooParameterTypes4 = new Class[] {
-		long.class, long.class, String.class
+		long.class, long.class, String.class, String.class, boolean.class
 	};
 
 }

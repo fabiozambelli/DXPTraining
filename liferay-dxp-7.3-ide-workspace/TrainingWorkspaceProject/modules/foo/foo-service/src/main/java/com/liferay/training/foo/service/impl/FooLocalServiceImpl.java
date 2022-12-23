@@ -21,6 +21,9 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.SortFactory;
+import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -90,7 +93,7 @@ public class FooLocalServiceImpl extends FooLocalServiceBaseImpl {
 	}
 	
 	// configure debug log level on com.liferay.portal.search.elasticsearch7.internal.ElasticsearchIndexSearcher 
-	public List<Foo> searchFoo(long companyId, long groupId, String keywords){
+	public List<Foo> searchFoo(long companyId, long groupId, String keywords, String orderFieldName, boolean orderReverse){
 		
 		// Build the Search Query
 		
@@ -112,11 +115,14 @@ public class FooLocalServiceImpl extends FooLocalServiceBaseImpl {
 		
 		String[] _entryClassNames = {Foo.class.getName()};
 		
+		Sort sort = SortFactoryUtil.create(orderFieldName, orderReverse);
+
 		searchRequestBuilder.withSearchContext(
 				searchContext -> {
 					searchContext.setCompanyId(companyId);
 					searchContext.setKeywords(keywords);
 					searchContext.setEntryClassNames(_entryClassNames);
+					searchContext.setSorts(sort);
 				});
 
 		SearchRequest searchRequest = searchRequestBuilder.query(

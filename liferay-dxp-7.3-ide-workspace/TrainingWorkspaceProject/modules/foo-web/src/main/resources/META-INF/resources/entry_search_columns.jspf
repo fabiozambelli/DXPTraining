@@ -2,3 +2,8 @@
 	name="field1"
 	value="<%= entry.getField1() %>"
 	/>
+	
+<liferay-ui:search-container-column-date 
+    name="create-date"
+    property="createDate" 
+/>

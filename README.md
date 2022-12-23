@@ -27,5 +27,5 @@
 
 - ./TrainingWorkspaceProject/build/docker$ **docker compose up --build -d**
 
-- ./TrainingWorkspaceProject/modules/<module>$ **../../gradlew dockerDeploy**
+- ./TrainingWorkspaceProject/modules/[module]$ **../../gradlew dockerDeploy**
 

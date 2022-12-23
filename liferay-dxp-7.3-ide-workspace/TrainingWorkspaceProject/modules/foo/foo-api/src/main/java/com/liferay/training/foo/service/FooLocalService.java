@@ -316,7 +316,9 @@ public interface FooLocalService
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Foo> searchFoo(long companyId, long groupId, String keywords);
+	public List<Foo> searchFoo(
+		long companyId, long groupId, String keywords, String orderFieldName,
+		boolean orderReverse);
 
 	/**
 	 * Updates the foo in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

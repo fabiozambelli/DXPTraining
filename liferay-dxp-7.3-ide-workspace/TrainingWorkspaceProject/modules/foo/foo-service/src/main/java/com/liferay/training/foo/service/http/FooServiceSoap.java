@@ -138,12 +138,14 @@ public class FooServiceSoap {
 	}
 
 	public static com.liferay.training.foo.model.FooSoap[] searchFoo(
-			long companyId, long groupId, String keywords)
+			long companyId, long groupId, String keywords,
+			String orderFieldName, boolean orderReverse)
 		throws RemoteException {
 
 		try {
 			java.util.List<com.liferay.training.foo.model.Foo> returnValue =
-				FooServiceUtil.searchFoo(companyId, groupId, keywords);
+				FooServiceUtil.searchFoo(
+					companyId, groupId, keywords, orderFieldName, orderReverse);
 
 			return com.liferay.training.foo.model.FooSoap.toSoapModels(
 				returnValue);

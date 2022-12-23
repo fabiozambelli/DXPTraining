@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -143,7 +144,7 @@ public class ItemsManagementToolbarDisplayContext extends BaseManagementToolbarD
 				add(dropdownItem -> {
 					dropdownItem.setActive("title".equals(getOrderByCol()));
 					dropdownItem.setHref(
-						_getCurrentSortingURL(), "orderByCol", "title");
+						_getCurrentSortingURL(), "orderByCol", Field.NAME);
 					dropdownItem.setLabel(LanguageUtil.get(request, "title"));
 				});
 				
@@ -151,7 +152,7 @@ public class ItemsManagementToolbarDisplayContext extends BaseManagementToolbarD
 					dropdownItem.setActive(
 							"createDate".equals(getOrderByCol()));
 					dropdownItem.setHref(
-							_getCurrentSortingURL(), "orderByCol", "createDate");
+							_getCurrentSortingURL(), "orderByCol", Field.CREATE_DATE);
 					dropdownItem.setLabel(
 							LanguageUtil.get(request, "create-date"));
 				});
