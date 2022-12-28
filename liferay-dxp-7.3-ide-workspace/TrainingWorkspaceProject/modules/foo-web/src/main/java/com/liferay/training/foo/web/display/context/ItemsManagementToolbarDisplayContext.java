@@ -86,7 +86,7 @@ public class ItemsManagementToolbarDisplayContext extends BaseManagementToolbarD
 	}
 	
 	public String getOrderByCol() {
-		return ParamUtil.getString(request, "orderByCol", "title");
+		return ParamUtil.getString(request, "orderByCol", Field.NAME);
 	}
 	
 	public String getOrderByType() {
@@ -117,7 +117,7 @@ public class ItemsManagementToolbarDisplayContext extends BaseManagementToolbarD
 		if (delta > 0) {
 			portletURL.setParameter("delta", String.valueOf(delta));
 		}
-		String orderByCol = ParamUtil.getString(request, "orderByCol", "title");
+		String orderByCol = ParamUtil.getString(request, "orderByCol", Field.NAME);
 		String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 		portletURL.setParameter("orderByCol", orderByCol);
 		portletURL.setParameter("orderByType", orderByType);
@@ -142,7 +142,7 @@ public class ItemsManagementToolbarDisplayContext extends BaseManagementToolbarD
 		return new DropdownItemList() {
 			{
 				add(dropdownItem -> {
-					dropdownItem.setActive("title".equals(getOrderByCol()));
+					dropdownItem.setActive(Field.NAME.equals(getOrderByCol()));
 					dropdownItem.setHref(
 						_getCurrentSortingURL(), "orderByCol", Field.NAME);
 					dropdownItem.setLabel(LanguageUtil.get(request, "title"));
@@ -150,7 +150,7 @@ public class ItemsManagementToolbarDisplayContext extends BaseManagementToolbarD
 				
 				add(dropdownItem -> {
 					dropdownItem.setActive(
-							"createDate".equals(getOrderByCol()));
+							Field.CREATE_DATE.equals(getOrderByCol()));
 					dropdownItem.setHref(
 							_getCurrentSortingURL(), "orderByCol", Field.CREATE_DATE);
 					dropdownItem.setLabel(

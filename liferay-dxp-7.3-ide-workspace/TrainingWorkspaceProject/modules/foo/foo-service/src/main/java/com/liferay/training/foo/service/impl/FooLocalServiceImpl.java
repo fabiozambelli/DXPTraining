@@ -116,7 +116,10 @@ public class FooLocalServiceImpl extends FooLocalServiceBaseImpl {
 		String[] _entryClassNames = {Foo.class.getName()};
 		
 		Sort sort = SortFactoryUtil.create(orderFieldName, orderReverse);
-
+		if (orderFieldName.equals(Field.CREATE_DATE)) {
+			sort.setType(Sort.LONG_TYPE);
+		}
+		
 		searchRequestBuilder.withSearchContext(
 				searchContext -> {
 					searchContext.setCompanyId(companyId);
