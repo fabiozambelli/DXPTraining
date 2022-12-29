@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactory;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.search.hits.SearchHit;
@@ -43,6 +44,7 @@ import com.liferay.training.foo.service.base.FooLocalServiceBaseImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.search.document.Document;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,7 +69,11 @@ public class FooLocalServiceImpl extends FooLocalServiceBaseImpl {
 		foo.setGroupId(groupId);
 		foo.setField1(field1);
 		
-		return super.addFoo(foo);
+		foo =  super.addFoo(foo);
+		
+		updateAsset(foo, serviceContext);
+		
+		return foo;
 	}
 	
 	public Foo updateFoo(long fooId, long groupId, String field1, ServiceContext serviceContext) throws PortalException {
@@ -76,9 +82,23 @@ public class FooLocalServiceImpl extends FooLocalServiceBaseImpl {
 		foo.setGroupId(groupId);
 		foo.setField1(field1);
 		
-		return super.updateFoo(foo);
+		foo =  super.updateFoo(foo);
+		
+		updateAsset(foo, serviceContext);
+		
+		return foo;
 	}
 	
+	private void updateAsset(Foo foo, ServiceContext serviceContext) throws PortalException {
+		
+		assetEntryLocalService.updateEntry(serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+				foo.getCreateDate(), foo.getModifiedDate(), Foo.class.getName(),
+				foo.getFooId(), foo.getUserUuid(), 0, serviceContext.getAssetCategoryIds(),
+				serviceContext.getAssetTagNames(), true, true, foo.getCreateDate(), null, null, null,
+				ContentTypes.TEXT_HTML, foo.getField1(), StringPool.BLANK,
+				null, null, null, 0, 0, serviceContext.getAssetPriority());
+	}
+
 	public List<Foo> getFoosByGroupId(long groupId) {
 		
 		return fooPersistence.findByGroupId(groupId);
@@ -97,13 +117,13 @@ public class FooLocalServiceImpl extends FooLocalServiceBaseImpl {
 		
 		// Build the Search Query
 		
-		// MatchQuery matchQuery = queries.match("field1", keywords);
+		MatchQuery matchQuery = queries.match("field1", keywords);  // Full Text Query : usually used for querying full text fields like the content field 
+
+		TermsQuery termsQuery = queries.terms("field1");  // Term queries : look for exact matching on keyword fields and indexed terms.
 		
-		// TermsQuery termsQuery = queries.terms("field1");
+		BooleanQuery booleanQuery = queries.booleanQuery();  // Compound Queries : wrap other queries
 
-		BooleanQuery booleanQuery = queries.booleanQuery();
-
-		// booleanQuery.addMustQueryClauses(termsQuery, matchQuery);
+		// booleanQuery.addMustQueryClauses(matchQuery);
 
 		
 		// Build the Search Request

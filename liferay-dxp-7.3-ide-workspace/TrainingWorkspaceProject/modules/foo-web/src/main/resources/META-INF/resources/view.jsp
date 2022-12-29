@@ -11,7 +11,7 @@
 </portlet:renderURL>
 
 <clay:management-toolbar
-	disabled="${fooCount eq 0}"
+	disabled="false"
 	displayContext="${itemsManagementToolbarDisplayContext}"
 	itemsTotal="${fooCount}"
 	searchContainerId="fooEntries"
