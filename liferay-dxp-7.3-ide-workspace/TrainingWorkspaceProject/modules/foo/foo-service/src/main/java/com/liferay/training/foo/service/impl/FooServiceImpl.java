@@ -16,6 +16,9 @@ package com.liferay.training.foo.service.impl;
 
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.training.foo.model.Foo;
 import com.liferay.training.foo.service.FooLocalService;
@@ -26,6 +29,8 @@ import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Brian Wing Shun Chan
@@ -38,19 +43,43 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class FooServiceImpl extends FooServiceBaseImpl {
 	
+	@Reference(
+			policy = ReferencePolicy.DYNAMIC,
+			policyOption = ReferencePolicyOption.GREEDY,
+			target = "(model.class.name=com.liferay.training.foo.model.Foo)"
+	)
+	private volatile ModelResourcePermission<Foo>
+			_fooModelResourcePermission;
+	
 	public Foo addFoo(long groupId, String field1, ServiceContext serviceContext) throws PortalException {
+		
+		ModelResourcePermissionHelper.check(
+				_fooModelResourcePermission, getPermissionChecker(),
+				serviceContext.getScopeGroupId(), 0,
+				ActionKeys.ADD_ENTRY);
+		
 		return fooLocalService.addFoo(groupId, field1, serviceContext);
 	}
 	
 	public Foo updateFoo(long fooId, long groupId, String field1, ServiceContext serviceContext) throws PortalException {
+		
+		_fooModelResourcePermission.check(
+				getPermissionChecker(),
+				fooLocalService.getFoo(fooId), ActionKeys.UPDATE);
+		
 		return fooLocalService.updateFoo(fooId, groupId, field1, serviceContext);
 	}
 
 	public List<Foo> getFoosByGroupId(long groupId) {
+		
 		return fooLocalService.getFoosByGroupId(groupId);
 	}
 	
 	public Foo getFoo(long fooId) throws PortalException {
+				
+		_fooModelResourcePermission.check(
+				getPermissionChecker(), fooLocalService.fetchFoo(fooId), ActionKeys.VIEW);
+		
 		return fooLocalService.getFoo(fooId);
 	}
 	

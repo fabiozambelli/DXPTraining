@@ -1,10 +1,11 @@
 Bundle-Name: foo-api
 Bundle-SymbolicName: com.liferay.training.foo.api
 Bundle-Version: 1.0.0
-Export-Package:\
+Export-Package: \
 	com.liferay.training.foo.exception,\
 	com.liferay.training.foo.model,\
 	com.liferay.training.foo.service,\
-	com.liferay.training.foo.service.persistence
+	com.liferay.training.foo.service.persistence,\
+	com.liferay.training.foo.constants
 -check: EXPORTS
 -includeresource: META-INF/service.xml=../foo-service/service.xml

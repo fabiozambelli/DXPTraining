@@ -14,20 +14,18 @@
 
 package com.liferay.training.foo.service.impl;
 
-import com.liferay.journal.constants.JournalFolderConstants;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.search.SortFactory;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.BooleanQuery;
@@ -41,10 +39,6 @@ import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.training.foo.model.Foo;
 import com.liferay.training.foo.service.base.FooLocalServiceBaseImpl;
-import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.search.document.Document;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,6 +64,11 @@ public class FooLocalServiceImpl extends FooLocalServiceBaseImpl {
 		foo.setField1(field1);
 		
 		foo =  super.addFoo(foo);
+		
+		resourceLocalService.addResources(
+				foo.getCompanyId(), foo.getGroupId(), foo.getUserId(),
+				Foo.class.getName(), foo.getFooId(), false,
+				serviceContext.isAddGroupPermissions(), serviceContext.isAddGuestPermissions());
 		
 		updateAsset(foo, serviceContext);
 		

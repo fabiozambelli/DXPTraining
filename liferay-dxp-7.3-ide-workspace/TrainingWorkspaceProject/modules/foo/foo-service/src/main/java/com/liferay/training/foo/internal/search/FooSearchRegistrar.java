@@ -32,13 +32,11 @@ public class FooSearchRegistrar {
 		_serviceRegistration = modelSearchRegistrarHelper.register(
 				Foo.class, bundleContext,
 				modelSearchDefinition -> {
-					modelSearchDefinition.setDefaultSelectedFieldNames(
-							Field.COMPANY_ID,
-							Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK,
-							Field.GROUP_ID, Field.SCOPE_GROUP_ID,
-							Field.UID, Field.NAME, Field.DESCRIPTION, "field1");
-					//modelSearchDefinition.setDefaultSelectedLocalizedFieldNames(
-					//		Field.CONTENT, Field.TITLE);
+					modelSearchDefinition.setDefaultSelectedFieldNames(Field.ASSET_TAG_NAMES, Field.COMPANY_ID,
+							Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK, Field.GROUP_ID, Field.MODIFIED_DATE,
+							Field.SCOPE_GROUP_ID, Field.UID);
+					modelSearchDefinition.setDefaultSelectedLocalizedFieldNames(
+							Field.CONTENT, Field.TITLE);
 					modelSearchDefinition.setModelIndexWriteContributor(
 							modelIndexWriterContributor);
 					modelSearchDefinition.setModelSummaryContributor(
