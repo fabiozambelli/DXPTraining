@@ -23,11 +23,13 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -108,6 +110,7 @@ public interface FooLocalService
 	 * @return the foo that was removed
 	 */
 	@Indexable(type = IndexableType.DELETE)
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public Foo deleteFoo(Foo foo);
 
 	/**
@@ -333,6 +336,7 @@ public interface FooLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public Foo updateFoo(Foo foo);
 
+	@Indexable(type = IndexableType.REINDEX)
 	public Foo updateFoo(
 			long fooId, long groupId, String field1,
 			ServiceContext serviceContext)

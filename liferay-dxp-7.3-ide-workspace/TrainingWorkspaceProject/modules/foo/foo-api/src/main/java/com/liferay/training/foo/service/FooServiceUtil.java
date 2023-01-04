@@ -46,6 +46,10 @@ public class FooServiceUtil {
 		return getService().addFoo(groupId, field1, serviceContext);
 	}
 
+	public static void deleteFoo(long fooId) throws PortalException {
+		getService().deleteFoo(fooId);
+	}
+
 	public static Foo getFoo(long fooId) throws PortalException {
 		return getService().getFoo(fooId);
 	}

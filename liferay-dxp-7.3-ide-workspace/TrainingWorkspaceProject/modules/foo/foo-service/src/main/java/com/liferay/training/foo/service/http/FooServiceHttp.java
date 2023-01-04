@@ -132,13 +132,46 @@ public class FooServiceHttp {
 		}
 	}
 
+	public static void deleteFoo(HttpPrincipal httpPrincipal, long fooId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				FooServiceUtil.class, "deleteFoo", _deleteFooParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, fooId);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static java.util.List<com.liferay.training.foo.model.Foo>
 		getFoosByGroupId(HttpPrincipal httpPrincipal, long groupId) {
 
 		try {
 			MethodKey methodKey = new MethodKey(
 				FooServiceUtil.class, "getFoosByGroupId",
-				_getFoosByGroupIdParameterTypes2);
+				_getFoosByGroupIdParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
 
@@ -170,7 +203,7 @@ public class FooServiceHttp {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				FooServiceUtil.class, "getFoo", _getFooParameterTypes3);
+				FooServiceUtil.class, "getFoo", _getFooParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, fooId);
 
@@ -209,7 +242,7 @@ public class FooServiceHttp {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				FooServiceUtil.class, "searchFoo", _searchFooParameterTypes4);
+				FooServiceUtil.class, "searchFoo", _searchFooParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, groupId, keywords, orderFieldName,
@@ -254,12 +287,15 @@ public class FooServiceHttp {
 		long.class, long.class, String.class,
 		com.liferay.portal.kernel.service.ServiceContext.class
 	};
-	private static final Class<?>[] _getFoosByGroupIdParameterTypes2 =
-		new Class[] {long.class};
-	private static final Class<?>[] _getFooParameterTypes3 = new Class[] {
+	private static final Class<?>[] _deleteFooParameterTypes2 = new Class[] {
 		long.class
 	};
-	private static final Class<?>[] _searchFooParameterTypes4 = new Class[] {
+	private static final Class<?>[] _getFoosByGroupIdParameterTypes3 =
+		new Class[] {long.class};
+	private static final Class<?>[] _getFooParameterTypes4 = new Class[] {
+		long.class
+	};
+	private static final Class<?>[] _searchFooParameterTypes5 = new Class[] {
 		long.class, long.class, String.class, String.class, boolean.class
 	};
 

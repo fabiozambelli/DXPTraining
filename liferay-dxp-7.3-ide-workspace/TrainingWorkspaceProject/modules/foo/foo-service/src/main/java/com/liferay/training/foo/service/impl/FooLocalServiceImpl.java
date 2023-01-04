@@ -17,12 +17,15 @@ package com.liferay.training.foo.service.impl;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.search.document.Document;
@@ -75,6 +78,7 @@ public class FooLocalServiceImpl extends FooLocalServiceBaseImpl {
 		return foo;
 	}
 	
+	@Indexable(type = IndexableType.REINDEX)
 	public Foo updateFoo(long fooId, long groupId, String field1, ServiceContext serviceContext) throws PortalException {
 		
 		Foo foo = getFoo(fooId);
@@ -96,6 +100,34 @@ public class FooLocalServiceImpl extends FooLocalServiceBaseImpl {
 				serviceContext.getAssetTagNames(), true, true, foo.getCreateDate(), null, null, null,
 				ContentTypes.TEXT_HTML, foo.getField1(), StringPool.BLANK,
 				null, null, null, 0, 0, serviceContext.getAssetPriority());
+	}
+	
+	@Indexable(type = IndexableType.DELETE)
+	@Override
+	public Foo deleteFoo(long fooId) throws PortalException {
+		Foo foo = fetchFoo(fooId);
+
+		if (foo != null) {
+			return deleteFoo(foo);
+		}
+
+		return null;
+	}
+
+	@Indexable(type = IndexableType.DELETE)
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
+	@Override
+	public Foo deleteFoo(Foo foo) {
+		try {
+			resourceLocalService.deleteResource(
+					foo.getCompanyId(), Foo.class.getName(),
+					ResourceConstants.SCOPE_INDIVIDUAL, foo.getFooId());
+		} catch (PortalException e) {
+			_log.warn("Error deleting persisted foo permissions: " + e.getMessage(), e);
+		}
+
+				// call the super action method to try the delete.
+		return fooLocalService.deleteFoo(foo);
 	}
 
 	public List<Foo> getFoosByGroupId(long groupId) {
@@ -150,11 +182,14 @@ public class FooLocalServiceImpl extends FooLocalServiceBaseImpl {
 		SearchRequest searchRequest = searchRequestBuilder.query(
 				booleanQuery
 		).build();
-
+		
 		// Execute the Search Request
 		
 		SearchResponse searchResponse = searcher.search(searchRequest);
 
+		_log.debug(searchResponse.getRequestString());
+		_log.debug(searchResponse.getResponseString());
+		
 		// Process the Search Response
 		
 		SearchHits searchHits = searchResponse.getSearchHits();

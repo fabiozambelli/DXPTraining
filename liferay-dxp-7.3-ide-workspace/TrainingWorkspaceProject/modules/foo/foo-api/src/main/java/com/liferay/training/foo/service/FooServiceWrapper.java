@@ -40,6 +40,13 @@ public class FooServiceWrapper
 	}
 
 	@Override
+	public void deleteFoo(long fooId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_fooService.deleteFoo(fooId);
+	}
+
+	@Override
 	public com.liferay.training.foo.model.Foo getFoo(long fooId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

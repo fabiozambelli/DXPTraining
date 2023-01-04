@@ -102,6 +102,17 @@ public class FooServiceSoap {
 		}
 	}
 
+	public static void deleteFoo(long fooId) throws RemoteException {
+		try {
+			FooServiceUtil.deleteFoo(fooId);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	public static com.liferay.training.foo.model.FooSoap[] getFoosByGroupId(
 			long groupId)
 		throws RemoteException {

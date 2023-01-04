@@ -69,6 +69,15 @@ public class FooServiceImpl extends FooServiceBaseImpl {
 		
 		return fooLocalService.updateFoo(fooId, groupId, field1, serviceContext);
 	}
+	
+	public void deleteFoo(long fooId) throws PortalException {
+		
+		_fooModelResourcePermission.check(
+				getPermissionChecker(),
+				fooLocalService.getFoo(fooId), ActionKeys.DELETE);
+
+		fooLocalService.deleteFoo(fooId);
+	}
 
 	public List<Foo> getFoosByGroupId(long groupId) {
 		

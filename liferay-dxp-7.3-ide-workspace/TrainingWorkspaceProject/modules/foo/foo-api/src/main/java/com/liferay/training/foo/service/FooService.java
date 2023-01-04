@@ -56,6 +56,8 @@ public interface FooService extends BaseService {
 			long groupId, String field1, ServiceContext serviceContext)
 		throws PortalException;
 
+	public void deleteFoo(long fooId) throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Foo getFoo(long fooId) throws PortalException;
 
