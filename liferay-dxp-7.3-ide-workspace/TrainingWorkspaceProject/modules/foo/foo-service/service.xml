@@ -40,9 +40,10 @@
 		</finder>
 
 		<!-- References -->
-
+		<reference entity="Group" package-path="com.liferay.portal" />
 		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
 		<reference entity="AssetTag" package-path="com.liferay.portlet.asset" />
+		<reference entity="AssetLink" package-path="com.liferay.portlet.asset" />
 	</entity>
 	<!-- Exceptions -->
 	<exceptions>

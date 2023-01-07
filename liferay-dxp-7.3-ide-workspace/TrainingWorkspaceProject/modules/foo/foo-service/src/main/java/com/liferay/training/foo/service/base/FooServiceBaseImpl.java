@@ -148,6 +148,13 @@ public abstract class FooServiceBaseImpl
 		classNameService;
 
 	@Reference
+	protected com.liferay.portal.kernel.service.GroupLocalService
+		groupLocalService;
+
+	@Reference
+	protected com.liferay.portal.kernel.service.GroupService groupService;
+
+	@Reference
 	protected com.liferay.portal.kernel.service.ResourceLocalService
 		resourceLocalService;
 
@@ -165,6 +172,10 @@ public abstract class FooServiceBaseImpl
 	@Reference
 	protected com.liferay.asset.kernel.service.AssetEntryService
 		assetEntryService;
+
+	@Reference
+	protected com.liferay.asset.kernel.service.AssetLinkLocalService
+		assetLinkLocalService;
 
 	@Reference
 	protected com.liferay.asset.kernel.service.AssetTagLocalService
