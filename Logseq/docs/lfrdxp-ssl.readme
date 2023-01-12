@@ -1,0 +1,58 @@
+# Creating a Private Key
+openssl genrsa -des3 -out fz5.biz.key 2048
+
+# Creating a Certificate Signing Request
+openssl req -key fz5.biz.key -new -out fz5.biz.csr
+
+# Creating a Self-Signed Certificate
+openssl x509 -signkey fz5.biz.key -in fz5.biz.csr -req -days 365 -out fz5.biz.crt
+
+# Create a Self-Signed Root CA
+openssl req -x509 -sha256 -days 1825 -newkey rsa:2048 -keyout rootCA.key -out rootCA.crt
+
+# Create fz5.biz.ext
+authorityKeyIdentifier=keyid,issuer
+basicConstraints=CA:FALSE
+subjectAltName = @alt_names
+[alt_names]
+DNS.1 = fz5.biz
+
+# Sign CSR With Root CA
+openssl x509 -req -CA rootCA.crt -CAkey rootCA.key -in fz5.biz.csr -out fz5.biz.crt -days 365 -CAcreateserial -extfile fz5.biz.ext
+
+# View Certificates
+openssl x509 -text -noout -in fz5.biz.crt
+
+
+# Create /etc/apache2/conf-available/ssl-params.conf
+SSLCipherSuite EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH
+SSLProtocol All -SSLv2 -SSLv3 -TLSv1 -TLSv1.1
+SSLHonorCipherOrder On
+Header always set X-Frame-Options DENY
+Header always set X-Content-Type-Options nosniff
+SSLCompression off
+SSLUseStapling on
+SSLStaplingCache "shmcb:logs/stapling-cache(150000)"
+SSLSessionTickets Off
+
+# Create /etc/apache2/sites-available/fz5.biz-ssl.conf
+
+# Enable modules
+sudo a2enmod ssl
+sudo a2enmod headers
+sudo a2enconf ssl-params
+sudo a2ensite fz5.biz-ssl.conf
+sudo apache2ctl configtest
+
+# Start apache
+sudo systemctl restart apache2
+
+# Enable ssl on Liferay
+$JAVA_HOME/bin/keytool -genkey -alias tomcat -keyalg RSA -keystore .keystore
+<Connector
+           protocol="org.apache.coyote.http11.Http11NioProtocol"
+           port="8443" maxThreads="200"
+           scheme="https" secure="true" SSLEnabled="true"
+           keystoreFile="conf/.keystore" keystorePass="changeit"
+           clientAuth="false" sslProtocol="TLS"/>
+
