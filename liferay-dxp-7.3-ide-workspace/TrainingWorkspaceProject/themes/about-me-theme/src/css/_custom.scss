@@ -5,26 +5,12 @@
 @import 'liferay-font-awesome/scss/font-awesome';
 @import 'liferay-font-awesome/scss/glyphicons';
 
+@import "partials/variables";
+@import "partials/backgrounds";
+@import "partials/texts";
+@import "partials/layouts";
+
 /* endinject */
 
 /* This file allows you to override default styles in one central location for easier upgrade and maintenance. */
 
-.full-name {
-	color: #031d3d;
-	font-family:"Arial";
-}
-
-.job-title {
-	color: #19376c;
-	font-family:"Arial";
-}
-
-.email-address {
-	color: #19376c;
-	font-family:"Arial";
-}
-
-.logo {
-	-webkit-filter: drop-shadow(0 .05rem .1rem rgba(0,0,0,.5));
-	filter: drop-shadow(0 .05rem .1rem rgba(0,0,0,.5));
-}
