@@ -22,6 +22,7 @@
 	- training-fragments
 	- training-layouttpl
 	- training-theme
+	- about-me-theme
 	
 ## Usage
 
