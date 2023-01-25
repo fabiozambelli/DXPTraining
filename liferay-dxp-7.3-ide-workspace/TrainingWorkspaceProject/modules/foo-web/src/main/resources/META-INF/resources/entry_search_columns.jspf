@@ -7,3 +7,6 @@
     name="create-date"
     property="createDate" 
 />
+
+<liferay-ui:search-container-column-jsp align="right"
+    path="/entry_actions.jsp" />

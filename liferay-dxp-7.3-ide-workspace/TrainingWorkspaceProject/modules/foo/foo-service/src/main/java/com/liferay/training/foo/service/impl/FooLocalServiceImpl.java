@@ -108,15 +108,12 @@ public class FooLocalServiceImpl extends FooLocalServiceBaseImpl {
 		Foo foo = fetchFoo(fooId);
 
 		if (foo != null) {
-			return deleteFoo(foo);
+			return fooLocalService.deleteFoo(foo);
 		}
 
 		return null;
 	}
 
-	@Indexable(type = IndexableType.DELETE)
-	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
-	@Override
 	public Foo deleteFoo(Foo foo) {
 		try {
 			resourceLocalService.deleteResource(
@@ -126,8 +123,8 @@ public class FooLocalServiceImpl extends FooLocalServiceBaseImpl {
 			_log.warn("Error deleting persisted foo permissions: " + e.getMessage(), e);
 		}
 
-				// call the super action method to try the delete.
-		return fooLocalService.deleteFoo(foo);
+		// call the super action method to try the delete.
+		return super.deleteFoo(foo);
 	}
 
 	public List<Foo> getFoosByGroupId(long groupId) {
