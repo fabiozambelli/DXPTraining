@@ -27,6 +27,13 @@
 		<column name="field2" type="boolean" />
 		<column name="field3" type="int" />
 		<column name="field4" type="Date" />
+		
+		<!-- Workflow -->
+		<column name="status" type="int" />
+		<column name="statusByUserId" type="long" />
+		<column name="statusByUserName" type="String" />
+		<column name="statusDate" type="Date" />
+				
 		<!-- Order -->
 
 		<order by="asc">
@@ -38,12 +45,19 @@
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>
+		
+		<finder name="GroupIdStatus" return-type="Collection">
+		   <finder-column name="groupId" />
+		   <finder-column name="status" />
+		 </finder>
 
 		<!-- References -->
 		<reference entity="Group" package-path="com.liferay.portal" />
 		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
 		<reference entity="AssetTag" package-path="com.liferay.portlet.asset" />
 		<reference entity="AssetLink" package-path="com.liferay.portlet.asset" />
+		<reference entity="WorkflowInstanceLink" package-path="com.liferay.portal" />
+		
 	</entity>
 	<!-- Exceptions -->
 	<exceptions>

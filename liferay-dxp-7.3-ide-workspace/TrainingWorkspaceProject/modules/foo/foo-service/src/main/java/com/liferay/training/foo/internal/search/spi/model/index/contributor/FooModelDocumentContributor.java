@@ -34,6 +34,7 @@ public class FooModelDocumentContributor implements ModelDocumentContributor<Foo
 		document.addDate(Field.CREATE_DATE, foo.getCreateDate());
 		document.addKeyword("field1", foo.getField1());		
 		document.addKeywordSortable("field1", foo.getField1());		
+		document.addKeyword("status", foo.getStatus());
 	}
 
 }

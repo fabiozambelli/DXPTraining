@@ -10,5 +10,9 @@ create table FOO_Foo (
 	field1 VARCHAR(75) null,
 	field2 BOOLEAN,
 	field3 INTEGER,
-	field4 DATE null
+	field4 DATE null,
+	status INTEGER,
+	statusByUserId LONG,
+	statusByUserName VARCHAR(75) null,
+	statusDate DATE null
 );

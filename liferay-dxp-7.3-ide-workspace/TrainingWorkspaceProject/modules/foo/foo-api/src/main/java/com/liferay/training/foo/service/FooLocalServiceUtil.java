@@ -16,6 +16,7 @@ package com.liferay.training.foo.service;
 
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.training.foo.model.Foo;
@@ -380,6 +381,14 @@ public class FooLocalServiceUtil {
 		throws PortalException {
 
 		return getService().updateFoo(fooId, groupId, field1, serviceContext);
+	}
+
+	public static Foo updateStatus(
+			long userId, long fooId, int status,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return getService().updateStatus(userId, fooId, status, serviceContext);
 	}
 
 	public static FooLocalService getService() {

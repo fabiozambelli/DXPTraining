@@ -431,6 +431,17 @@ public class FooLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.training.foo.model.Foo updateStatus(
+			long userId, long fooId, int status,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			   com.liferay.portal.kernel.exception.SystemException {
+
+		return _fooLocalService.updateStatus(
+			userId, fooId, status, serviceContext);
+	}
+
+	@Override
 	public FooLocalService getWrappedService() {
 		return _fooLocalService;
 	}

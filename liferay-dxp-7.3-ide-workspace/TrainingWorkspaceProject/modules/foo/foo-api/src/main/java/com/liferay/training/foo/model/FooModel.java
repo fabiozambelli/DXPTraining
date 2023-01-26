@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedAuditedModel;
+import com.liferay.portal.kernel.model.WorkflowedModel;
 
 import java.util.Date;
 
@@ -37,7 +38,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface FooModel
-	extends BaseModel<Foo>, GroupedModel, ShardedModel, StagedAuditedModel {
+	extends BaseModel<Foo>, GroupedModel, ShardedModel, StagedAuditedModel,
+			WorkflowedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -266,5 +268,150 @@ public interface FooModel
 	 * @param field4 the field4 of this foo
 	 */
 	public void setField4(Date field4);
+
+	/**
+	 * Returns the status of this foo.
+	 *
+	 * @return the status of this foo
+	 */
+	@Override
+	public int getStatus();
+
+	/**
+	 * Sets the status of this foo.
+	 *
+	 * @param status the status of this foo
+	 */
+	@Override
+	public void setStatus(int status);
+
+	/**
+	 * Returns the status by user ID of this foo.
+	 *
+	 * @return the status by user ID of this foo
+	 */
+	@Override
+	public long getStatusByUserId();
+
+	/**
+	 * Sets the status by user ID of this foo.
+	 *
+	 * @param statusByUserId the status by user ID of this foo
+	 */
+	@Override
+	public void setStatusByUserId(long statusByUserId);
+
+	/**
+	 * Returns the status by user uuid of this foo.
+	 *
+	 * @return the status by user uuid of this foo
+	 */
+	@Override
+	public String getStatusByUserUuid();
+
+	/**
+	 * Sets the status by user uuid of this foo.
+	 *
+	 * @param statusByUserUuid the status by user uuid of this foo
+	 */
+	@Override
+	public void setStatusByUserUuid(String statusByUserUuid);
+
+	/**
+	 * Returns the status by user name of this foo.
+	 *
+	 * @return the status by user name of this foo
+	 */
+	@AutoEscape
+	@Override
+	public String getStatusByUserName();
+
+	/**
+	 * Sets the status by user name of this foo.
+	 *
+	 * @param statusByUserName the status by user name of this foo
+	 */
+	@Override
+	public void setStatusByUserName(String statusByUserName);
+
+	/**
+	 * Returns the status date of this foo.
+	 *
+	 * @return the status date of this foo
+	 */
+	@Override
+	public Date getStatusDate();
+
+	/**
+	 * Sets the status date of this foo.
+	 *
+	 * @param statusDate the status date of this foo
+	 */
+	@Override
+	public void setStatusDate(Date statusDate);
+
+	/**
+	 * Returns <code>true</code> if this foo is approved.
+	 *
+	 * @return <code>true</code> if this foo is approved; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isApproved();
+
+	/**
+	 * Returns <code>true</code> if this foo is denied.
+	 *
+	 * @return <code>true</code> if this foo is denied; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isDenied();
+
+	/**
+	 * Returns <code>true</code> if this foo is a draft.
+	 *
+	 * @return <code>true</code> if this foo is a draft; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isDraft();
+
+	/**
+	 * Returns <code>true</code> if this foo is expired.
+	 *
+	 * @return <code>true</code> if this foo is expired; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isExpired();
+
+	/**
+	 * Returns <code>true</code> if this foo is inactive.
+	 *
+	 * @return <code>true</code> if this foo is inactive; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isInactive();
+
+	/**
+	 * Returns <code>true</code> if this foo is incomplete.
+	 *
+	 * @return <code>true</code> if this foo is incomplete; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isIncomplete();
+
+	/**
+	 * Returns <code>true</code> if this foo is pending.
+	 *
+	 * @return <code>true</code> if this foo is pending; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isPending();
+
+	/**
+	 * Returns <code>true</code> if this foo is scheduled.
+	 *
+	 * @return <code>true</code> if this foo is scheduled; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isScheduled();
 
 }

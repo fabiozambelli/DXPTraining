@@ -32,6 +32,8 @@ public class FooKeywordQueryContributor implements KeywordQueryContributor {
 				booleanQuery, searchContext, Field.NAME, false);
 		queryHelper.addSearchTerm(
 				booleanQuery, searchContext, "field1", false);
+		queryHelper.addSearchTerm(
+				booleanQuery, searchContext, "status", false);
 	}
 
 	@Reference

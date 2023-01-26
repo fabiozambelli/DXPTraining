@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.training.foo.model.Foo;
 import com.liferay.training.foo.model.FooModel;
 import com.liferay.training.foo.model.FooSoap;
@@ -81,7 +82,9 @@ public class FooModelImpl extends BaseModelImpl<Foo> implements FooModel {
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"field1", Types.VARCHAR}, {"field2", Types.BOOLEAN},
-		{"field3", Types.INTEGER}, {"field4", Types.TIMESTAMP}
+		{"field3", Types.INTEGER}, {"field4", Types.TIMESTAMP},
+		{"status", Types.INTEGER}, {"statusByUserId", Types.BIGINT},
+		{"statusByUserName", Types.VARCHAR}, {"statusDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -100,10 +103,14 @@ public class FooModelImpl extends BaseModelImpl<Foo> implements FooModel {
 		TABLE_COLUMNS_MAP.put("field2", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("field3", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("field4", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("statusByUserId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("statusByUserName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table FOO_Foo (uuid_ VARCHAR(75) null,fooId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,field1 VARCHAR(75) null,field2 BOOLEAN,field3 INTEGER,field4 DATE null)";
+		"create table FOO_Foo (uuid_ VARCHAR(75) null,fooId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,field1 VARCHAR(75) null,field2 BOOLEAN,field3 INTEGER,field4 DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table FOO_Foo";
 
@@ -133,14 +140,20 @@ public class FooModelImpl extends BaseModelImpl<Foo> implements FooModel {
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long UUID_COLUMN_BITMASK = 4L;
+	public static final long STATUS_COLUMN_BITMASK = 4L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long UUID_COLUMN_BITMASK = 8L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long FIELD1_COLUMN_BITMASK = 8L;
+	public static final long FIELD1_COLUMN_BITMASK = 16L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -183,6 +196,10 @@ public class FooModelImpl extends BaseModelImpl<Foo> implements FooModel {
 		model.setField2(soapModel.isField2());
 		model.setField3(soapModel.getField3());
 		model.setField4(soapModel.getField4());
+		model.setStatus(soapModel.getStatus());
+		model.setStatusByUserId(soapModel.getStatusByUserId());
+		model.setStatusByUserName(soapModel.getStatusByUserName());
+		model.setStatusDate(soapModel.getStatusDate());
 
 		return model;
 	}
@@ -363,6 +380,20 @@ public class FooModelImpl extends BaseModelImpl<Foo> implements FooModel {
 		attributeGetterFunctions.put("field4", Foo::getField4);
 		attributeSetterBiConsumers.put(
 			"field4", (BiConsumer<Foo, Date>)Foo::setField4);
+		attributeGetterFunctions.put("status", Foo::getStatus);
+		attributeSetterBiConsumers.put(
+			"status", (BiConsumer<Foo, Integer>)Foo::setStatus);
+		attributeGetterFunctions.put("statusByUserId", Foo::getStatusByUserId);
+		attributeSetterBiConsumers.put(
+			"statusByUserId", (BiConsumer<Foo, Long>)Foo::setStatusByUserId);
+		attributeGetterFunctions.put(
+			"statusByUserName", Foo::getStatusByUserName);
+		attributeSetterBiConsumers.put(
+			"statusByUserName",
+			(BiConsumer<Foo, String>)Foo::setStatusByUserName);
+		attributeGetterFunctions.put("statusDate", Foo::getStatusDate);
+		attributeSetterBiConsumers.put(
+			"statusDate", (BiConsumer<Foo, Date>)Foo::setStatusDate);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -621,10 +652,181 @@ public class FooModelImpl extends BaseModelImpl<Foo> implements FooModel {
 		_field4 = field4;
 	}
 
+	@JSON
+	@Override
+	public int getStatus() {
+		return _status;
+	}
+
+	@Override
+	public void setStatus(int status) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_status = status;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public int getOriginalStatus() {
+		return GetterUtil.getInteger(
+			this.<Integer>getColumnOriginalValue("status"));
+	}
+
+	@JSON
+	@Override
+	public long getStatusByUserId() {
+		return _statusByUserId;
+	}
+
+	@Override
+	public void setStatusByUserId(long statusByUserId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_statusByUserId = statusByUserId;
+	}
+
+	@Override
+	public String getStatusByUserUuid() {
+		try {
+			User user = UserLocalServiceUtil.getUserById(getStatusByUserId());
+
+			return user.getUuid();
+		}
+		catch (PortalException portalException) {
+			return "";
+		}
+	}
+
+	@Override
+	public void setStatusByUserUuid(String statusByUserUuid) {
+	}
+
+	@JSON
+	@Override
+	public String getStatusByUserName() {
+		if (_statusByUserName == null) {
+			return "";
+		}
+		else {
+			return _statusByUserName;
+		}
+	}
+
+	@Override
+	public void setStatusByUserName(String statusByUserName) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_statusByUserName = statusByUserName;
+	}
+
+	@JSON
+	@Override
+	public Date getStatusDate() {
+		return _statusDate;
+	}
+
+	@Override
+	public void setStatusDate(Date statusDate) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_statusDate = statusDate;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(
 			PortalUtil.getClassNameId(Foo.class.getName()));
+	}
+
+	@Override
+	public boolean isApproved() {
+		if (getStatus() == WorkflowConstants.STATUS_APPROVED) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isDenied() {
+		if (getStatus() == WorkflowConstants.STATUS_DENIED) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isDraft() {
+		if (getStatus() == WorkflowConstants.STATUS_DRAFT) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isExpired() {
+		if (getStatus() == WorkflowConstants.STATUS_EXPIRED) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isInactive() {
+		if (getStatus() == WorkflowConstants.STATUS_INACTIVE) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isIncomplete() {
+		if (getStatus() == WorkflowConstants.STATUS_INCOMPLETE) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isPending() {
+		if (getStatus() == WorkflowConstants.STATUS_PENDING) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isScheduled() {
+		if (getStatus() == WorkflowConstants.STATUS_SCHEDULED) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	public long getColumnBitmask() {
@@ -694,6 +896,10 @@ public class FooModelImpl extends BaseModelImpl<Foo> implements FooModel {
 		fooImpl.setField2(isField2());
 		fooImpl.setField3(getField3());
 		fooImpl.setField4(getField4());
+		fooImpl.setStatus(getStatus());
+		fooImpl.setStatusByUserId(getStatusByUserId());
+		fooImpl.setStatusByUserName(getStatusByUserName());
+		fooImpl.setStatusDate(getStatusDate());
 
 		fooImpl.resetOriginalValues();
 
@@ -834,6 +1040,27 @@ public class FooModelImpl extends BaseModelImpl<Foo> implements FooModel {
 			fooCacheModel.field4 = Long.MIN_VALUE;
 		}
 
+		fooCacheModel.status = getStatus();
+
+		fooCacheModel.statusByUserId = getStatusByUserId();
+
+		fooCacheModel.statusByUserName = getStatusByUserName();
+
+		String statusByUserName = fooCacheModel.statusByUserName;
+
+		if ((statusByUserName != null) && (statusByUserName.length() == 0)) {
+			fooCacheModel.statusByUserName = null;
+		}
+
+		Date statusDate = getStatusDate();
+
+		if (statusDate != null) {
+			fooCacheModel.statusDate = statusDate.getTime();
+		}
+		else {
+			fooCacheModel.statusDate = Long.MIN_VALUE;
+		}
+
 		return fooCacheModel;
 	}
 
@@ -935,6 +1162,10 @@ public class FooModelImpl extends BaseModelImpl<Foo> implements FooModel {
 	private boolean _field2;
 	private int _field3;
 	private Date _field4;
+	private int _status;
+	private long _statusByUserId;
+	private String _statusByUserName;
+	private Date _statusDate;
 
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
@@ -977,6 +1208,10 @@ public class FooModelImpl extends BaseModelImpl<Foo> implements FooModel {
 		_columnOriginalValues.put("field2", _field2);
 		_columnOriginalValues.put("field3", _field3);
 		_columnOriginalValues.put("field4", _field4);
+		_columnOriginalValues.put("status", _status);
+		_columnOriginalValues.put("statusByUserId", _statusByUserId);
+		_columnOriginalValues.put("statusByUserName", _statusByUserName);
+		_columnOriginalValues.put("statusDate", _statusDate);
 	}
 
 	private static final Map<String, String> _attributeNames;
@@ -1023,6 +1258,14 @@ public class FooModelImpl extends BaseModelImpl<Foo> implements FooModel {
 		columnBitmasks.put("field3", 1024L);
 
 		columnBitmasks.put("field4", 2048L);
+
+		columnBitmasks.put("status", 4096L);
+
+		columnBitmasks.put("statusByUserId", 8192L);
+
+		columnBitmasks.put("statusByUserName", 16384L);
+
+		columnBitmasks.put("statusDate", 32768L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

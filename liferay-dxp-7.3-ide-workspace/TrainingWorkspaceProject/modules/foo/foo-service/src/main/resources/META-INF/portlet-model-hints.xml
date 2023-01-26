@@ -14,5 +14,9 @@
 		<field name="field2" type="boolean" />
 		<field name="field3" type="int" />
 		<field name="field4" type="Date" />
+		<field name="status" type="int" />
+		<field name="statusByUserId" type="long" />
+		<field name="statusByUserName" type="String" />
+		<field name="statusDate" type="Date" />
 	</model>
 </model-hints>

@@ -17,8 +17,10 @@ package com.liferay.training.foo.service.impl;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
@@ -28,6 +30,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
@@ -44,6 +48,7 @@ import com.liferay.training.foo.model.Foo;
 import com.liferay.training.foo.service.base.FooLocalServiceBaseImpl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -66,6 +71,11 @@ public class FooLocalServiceImpl extends FooLocalServiceBaseImpl {
 		foo.setGroupId(groupId);
 		foo.setField1(field1);
 		
+		foo.setStatus(WorkflowConstants.STATUS_DRAFT);
+		foo.setStatusByUserId(serviceContext.getUserId());
+		foo.setStatusByUserName(userLocalService.getUser(serviceContext.getUserId()).getScreenName());
+		foo.setStatusDate(serviceContext.getModifiedDate(null));
+		
 		foo =  super.addFoo(foo);
 		
 		resourceLocalService.addResources(
@@ -74,6 +84,10 @@ public class FooLocalServiceImpl extends FooLocalServiceBaseImpl {
 				serviceContext.isAddGroupPermissions(), serviceContext.isAddGuestPermissions());
 		
 		updateAsset(foo, serviceContext);
+		
+		WorkflowHandlerRegistryUtil.startWorkflowInstance(foo.getCompanyId(), 
+				foo.getGroupId(), foo.getUserId(), Foo.class.getName(), 
+	            foo.getPrimaryKey(), foo, serviceContext);
 		
 		return foo;
 	}
@@ -119,6 +133,11 @@ public class FooLocalServiceImpl extends FooLocalServiceBaseImpl {
 			resourceLocalService.deleteResource(
 					foo.getCompanyId(), Foo.class.getName(),
 					ResourceConstants.SCOPE_INDIVIDUAL, foo.getFooId());
+			
+			workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(
+					foo.getCompanyId(), foo.getGroupId(),
+				    Foo.class.getName(), foo.getFooId());
+			
 		} catch (PortalException e) {
 			_log.warn("Error deleting persisted foo permissions: " + e.getMessage(), e);
 		}
@@ -126,18 +145,52 @@ public class FooLocalServiceImpl extends FooLocalServiceBaseImpl {
 		// call the super action method to try the delete.
 		return super.deleteFoo(foo);
 	}
+	
+	public Foo updateStatus(long userId, long fooId, int status,
+			ServiceContext serviceContext) throws PortalException,
+			SystemException {
+		
+		
+		Foo foo = getFoo(fooId);
+		
+		foo.setStatus(status);
+		if (userId>0) {
+			User user = userLocalService.getUser(userId);
+			foo.setStatusByUserId(userId);
+			foo.setStatusByUserName(user.getFullName());
+		} else {
+			foo.setStatusByUserId(0);
+			foo.setStatusByUserName(StringPool.BLANK);
+		}
+		
+		foo.setStatusDate(new Date());
+
+		fooPersistence.update(foo);
+		
+		
+		if (status == WorkflowConstants.STATUS_APPROVED) {
+
+			assetEntryLocalService.updateVisible(Foo.class.getName(), fooId, true);
+
+		} else {
+
+			assetEntryLocalService.updateVisible(Foo.class.getName(), fooId, false);
+		}
+		
+		return foo;
+	}
 
 	public List<Foo> getFoosByGroupId(long groupId) {
 		
-		return fooPersistence.findByGroupId(groupId);
+		return fooPersistence.findByGroupIdStatus(groupId,WorkflowConstants.STATUS_APPROVED);
 	}
 	
 	public List<Foo> getFoosByGroupId(long groupId, int start, int end) {
-		return fooPersistence.findByGroupId(groupId, start, end);
+		return fooPersistence.findByGroupIdStatus(groupId,WorkflowConstants.STATUS_APPROVED, start, end);
 	}
 	
 	public List<Foo> getFoosByGroupId(long groupId, int start, int end, OrderByComparator<Foo> orderByComparator) {
-		return fooPersistence.findByGroupId(groupId, start, end, orderByComparator);
+		return fooPersistence.findByGroupIdStatus(groupId,WorkflowConstants.STATUS_APPROVED, start, end, orderByComparator);
 	}
 	
 	// configure debug log level on com.liferay.portal.search.elasticsearch7.internal.ElasticsearchIndexSearcher 
@@ -151,7 +204,7 @@ public class FooLocalServiceImpl extends FooLocalServiceBaseImpl {
 		
 		BooleanQuery booleanQuery = queries.booleanQuery();  // Compound Queries : wrap other queries
 
-		// booleanQuery.addMustQueryClauses(matchQuery);
+		// booleanQuery.addMustQueryClauses(queries.match("status", 0));
 
 		
 		// Build the Search Request

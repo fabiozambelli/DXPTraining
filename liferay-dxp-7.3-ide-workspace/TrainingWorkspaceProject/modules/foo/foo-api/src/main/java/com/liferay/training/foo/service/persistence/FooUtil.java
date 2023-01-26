@@ -758,6 +758,271 @@ public class FooUtil {
 	}
 
 	/**
+	 * Returns all the foos where groupId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @return the matching foos
+	 */
+	public static List<Foo> findByGroupIdStatus(long groupId, int status) {
+		return getPersistence().findByGroupIdStatus(groupId, status);
+	}
+
+	/**
+	 * Returns a range of all the foos where groupId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FooModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param start the lower bound of the range of foos
+	 * @param end the upper bound of the range of foos (not inclusive)
+	 * @return the range of matching foos
+	 */
+	public static List<Foo> findByGroupIdStatus(
+		long groupId, int status, int start, int end) {
+
+		return getPersistence().findByGroupIdStatus(
+			groupId, status, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the foos where groupId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FooModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param start the lower bound of the range of foos
+	 * @param end the upper bound of the range of foos (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching foos
+	 */
+	public static List<Foo> findByGroupIdStatus(
+		long groupId, int status, int start, int end,
+		OrderByComparator<Foo> orderByComparator) {
+
+		return getPersistence().findByGroupIdStatus(
+			groupId, status, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the foos where groupId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FooModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param start the lower bound of the range of foos
+	 * @param end the upper bound of the range of foos (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching foos
+	 */
+	public static List<Foo> findByGroupIdStatus(
+		long groupId, int status, int start, int end,
+		OrderByComparator<Foo> orderByComparator, boolean useFinderCache) {
+
+		return getPersistence().findByGroupIdStatus(
+			groupId, status, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first foo in the ordered set where groupId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching foo
+	 * @throws NoSuchFooException if a matching foo could not be found
+	 */
+	public static Foo findByGroupIdStatus_First(
+			long groupId, int status, OrderByComparator<Foo> orderByComparator)
+		throws com.liferay.training.foo.exception.NoSuchFooException {
+
+		return getPersistence().findByGroupIdStatus_First(
+			groupId, status, orderByComparator);
+	}
+
+	/**
+	 * Returns the first foo in the ordered set where groupId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching foo, or <code>null</code> if a matching foo could not be found
+	 */
+	public static Foo fetchByGroupIdStatus_First(
+		long groupId, int status, OrderByComparator<Foo> orderByComparator) {
+
+		return getPersistence().fetchByGroupIdStatus_First(
+			groupId, status, orderByComparator);
+	}
+
+	/**
+	 * Returns the last foo in the ordered set where groupId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching foo
+	 * @throws NoSuchFooException if a matching foo could not be found
+	 */
+	public static Foo findByGroupIdStatus_Last(
+			long groupId, int status, OrderByComparator<Foo> orderByComparator)
+		throws com.liferay.training.foo.exception.NoSuchFooException {
+
+		return getPersistence().findByGroupIdStatus_Last(
+			groupId, status, orderByComparator);
+	}
+
+	/**
+	 * Returns the last foo in the ordered set where groupId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching foo, or <code>null</code> if a matching foo could not be found
+	 */
+	public static Foo fetchByGroupIdStatus_Last(
+		long groupId, int status, OrderByComparator<Foo> orderByComparator) {
+
+		return getPersistence().fetchByGroupIdStatus_Last(
+			groupId, status, orderByComparator);
+	}
+
+	/**
+	 * Returns the foos before and after the current foo in the ordered set where groupId = &#63; and status = &#63;.
+	 *
+	 * @param fooId the primary key of the current foo
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next foo
+	 * @throws NoSuchFooException if a foo with the primary key could not be found
+	 */
+	public static Foo[] findByGroupIdStatus_PrevAndNext(
+			long fooId, long groupId, int status,
+			OrderByComparator<Foo> orderByComparator)
+		throws com.liferay.training.foo.exception.NoSuchFooException {
+
+		return getPersistence().findByGroupIdStatus_PrevAndNext(
+			fooId, groupId, status, orderByComparator);
+	}
+
+	/**
+	 * Returns all the foos that the user has permission to view where groupId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @return the matching foos that the user has permission to view
+	 */
+	public static List<Foo> filterFindByGroupIdStatus(
+		long groupId, int status) {
+
+		return getPersistence().filterFindByGroupIdStatus(groupId, status);
+	}
+
+	/**
+	 * Returns a range of all the foos that the user has permission to view where groupId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FooModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param start the lower bound of the range of foos
+	 * @param end the upper bound of the range of foos (not inclusive)
+	 * @return the range of matching foos that the user has permission to view
+	 */
+	public static List<Foo> filterFindByGroupIdStatus(
+		long groupId, int status, int start, int end) {
+
+		return getPersistence().filterFindByGroupIdStatus(
+			groupId, status, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the foos that the user has permissions to view where groupId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FooModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param start the lower bound of the range of foos
+	 * @param end the upper bound of the range of foos (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching foos that the user has permission to view
+	 */
+	public static List<Foo> filterFindByGroupIdStatus(
+		long groupId, int status, int start, int end,
+		OrderByComparator<Foo> orderByComparator) {
+
+		return getPersistence().filterFindByGroupIdStatus(
+			groupId, status, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns the foos before and after the current foo in the ordered set of foos that the user has permission to view where groupId = &#63; and status = &#63;.
+	 *
+	 * @param fooId the primary key of the current foo
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next foo
+	 * @throws NoSuchFooException if a foo with the primary key could not be found
+	 */
+	public static Foo[] filterFindByGroupIdStatus_PrevAndNext(
+			long fooId, long groupId, int status,
+			OrderByComparator<Foo> orderByComparator)
+		throws com.liferay.training.foo.exception.NoSuchFooException {
+
+		return getPersistence().filterFindByGroupIdStatus_PrevAndNext(
+			fooId, groupId, status, orderByComparator);
+	}
+
+	/**
+	 * Removes all the foos where groupId = &#63; and status = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 */
+	public static void removeByGroupIdStatus(long groupId, int status) {
+		getPersistence().removeByGroupIdStatus(groupId, status);
+	}
+
+	/**
+	 * Returns the number of foos where groupId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @return the number of matching foos
+	 */
+	public static int countByGroupIdStatus(long groupId, int status) {
+		return getPersistence().countByGroupIdStatus(groupId, status);
+	}
+
+	/**
+	 * Returns the number of foos that the user has permission to view where groupId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @return the number of matching foos that the user has permission to view
+	 */
+	public static int filterCountByGroupIdStatus(long groupId, int status) {
+		return getPersistence().filterCountByGroupIdStatus(groupId, status);
+	}
+
+	/**
 	 * Caches the foo in the entity cache if it is enabled.
 	 *
 	 * @param foo the foo

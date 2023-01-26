@@ -60,7 +60,7 @@ public class FooCacheModel implements CacheModel<Foo>, Externalizable {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -86,6 +86,14 @@ public class FooCacheModel implements CacheModel<Foo>, Externalizable {
 		sb.append(field3);
 		sb.append(", field4=");
 		sb.append(field4);
+		sb.append(", status=");
+		sb.append(status);
+		sb.append(", statusByUserId=");
+		sb.append(statusByUserId);
+		sb.append(", statusByUserName=");
+		sb.append(statusByUserName);
+		sb.append(", statusDate=");
+		sb.append(statusDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -145,6 +153,23 @@ public class FooCacheModel implements CacheModel<Foo>, Externalizable {
 			fooImpl.setField4(new Date(field4));
 		}
 
+		fooImpl.setStatus(status);
+		fooImpl.setStatusByUserId(statusByUserId);
+
+		if (statusByUserName == null) {
+			fooImpl.setStatusByUserName("");
+		}
+		else {
+			fooImpl.setStatusByUserName(statusByUserName);
+		}
+
+		if (statusDate == Long.MIN_VALUE) {
+			fooImpl.setStatusDate(null);
+		}
+		else {
+			fooImpl.setStatusDate(new Date(statusDate));
+		}
+
 		fooImpl.resetOriginalValues();
 
 		return fooImpl;
@@ -170,6 +195,12 @@ public class FooCacheModel implements CacheModel<Foo>, Externalizable {
 
 		field3 = objectInput.readInt();
 		field4 = objectInput.readLong();
+
+		status = objectInput.readInt();
+
+		statusByUserId = objectInput.readLong();
+		statusByUserName = objectInput.readUTF();
+		statusDate = objectInput.readLong();
 	}
 
 	@Override
@@ -210,6 +241,19 @@ public class FooCacheModel implements CacheModel<Foo>, Externalizable {
 
 		objectOutput.writeInt(field3);
 		objectOutput.writeLong(field4);
+
+		objectOutput.writeInt(status);
+
+		objectOutput.writeLong(statusByUserId);
+
+		if (statusByUserName == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(statusByUserName);
+		}
+
+		objectOutput.writeLong(statusDate);
 	}
 
 	public String uuid;
@@ -224,5 +268,9 @@ public class FooCacheModel implements CacheModel<Foo>, Externalizable {
 	public boolean field2;
 	public int field3;
 	public long field4;
+	public int status;
+	public long statusByUserId;
+	public String statusByUserName;
+	public long statusDate;
 
 }
