@@ -70,6 +70,7 @@ public class FooLocalServiceImpl extends FooLocalServiceBaseImpl {
 		Foo foo = createFoo(fooId);
 		foo.setGroupId(groupId);
 		foo.setField1(field1);
+		foo.setUserId(serviceContext.getUserId());
 		
 		foo.setStatus(WorkflowConstants.STATUS_DRAFT);
 		foo.setStatusByUserId(serviceContext.getUserId());
@@ -146,6 +147,7 @@ public class FooLocalServiceImpl extends FooLocalServiceBaseImpl {
 		return super.deleteFoo(foo);
 	}
 	
+	@Indexable(type = IndexableType.REINDEX)
 	public Foo updateStatus(long userId, long fooId, int status,
 			ServiceContext serviceContext) throws PortalException,
 			SystemException {
@@ -154,14 +156,9 @@ public class FooLocalServiceImpl extends FooLocalServiceBaseImpl {
 		Foo foo = getFoo(fooId);
 		
 		foo.setStatus(status);
-		if (userId>0) {
-			User user = userLocalService.getUser(userId);
-			foo.setStatusByUserId(userId);
-			foo.setStatusByUserName(user.getFullName());
-		} else {
-			foo.setStatusByUserId(0);
-			foo.setStatusByUserName(StringPool.BLANK);
-		}
+		User user = userLocalService.getUser(userId);
+		foo.setStatusByUserId(userId);
+		foo.setStatusByUserName(user.getFullName());
 		
 		foo.setStatusDate(new Date());
 
@@ -229,6 +226,8 @@ public class FooLocalServiceImpl extends FooLocalServiceBaseImpl {
 					searchContext.setSorts(sort);
 				});
 
+		searchRequestBuilder.postFilterQuery(queries.match("status", WorkflowConstants.STATUS_APPROVED));
+		
 		SearchRequest searchRequest = searchRequestBuilder.query(
 				booleanQuery
 		).build();

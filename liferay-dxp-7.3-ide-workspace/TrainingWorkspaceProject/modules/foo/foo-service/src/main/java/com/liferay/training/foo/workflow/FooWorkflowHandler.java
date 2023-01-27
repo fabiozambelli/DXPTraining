@@ -42,12 +42,12 @@ public class FooWorkflowHandler extends BaseWorkflowHandler<Foo>  {
         long resourcePrimKey = GetterUtil.getLong(
             (String)workflowContext.get(
                 WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
-
+        
         ServiceContext serviceContext = (ServiceContext)workflowContext.get(
             "serviceContext");
 
         return _fooLocalService.updateStatus(
-            userId, resourcePrimKey, status, serviceContext);
+        		userId, resourcePrimKey, status, serviceContext);
 	}
 	
 	@Reference(unbind = "-")
